@@ -41,4 +41,6 @@
 
 #### Ensure the display is updated periodically to show real time values.
 
-# Video to My design on Proteus  https://drive.google.com/file/d/1G75nkGe4hD9AYu2YeP_Gth_Iys9Kbb5s/view?usp=sharing
+
+## Video to My design on Proteus : 
+### https://drive.google.com/file/d/1G75nkGe4hD9AYu2YeP_Gth_Iys9Kbb5s/view?usp=sharing
