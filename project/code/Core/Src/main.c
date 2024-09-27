@@ -18,7 +18,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "lcd_txt.h"
+#include "lcd_txt.h" // include LCD driver to be able to use it function in your code
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
@@ -26,12 +26,15 @@ TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
 
 /* USER CODE BEGIN PV */
-uint16_t percentage;
-uint16_t dutycycle;
-uint16_t PotAfterConversion;
-uint16_t PWMconversion;
-float voltage;
 
+uint16_t dutycycle; // duty cycle of pwm 
+uint16_t percentage;  // convert duty cycle into percentage
+uint16_t PotAfterConversion; // value of potentiometer after conversion from analog to digital  form 0 -> 4095
+uint16_t PWMconversion; //  value of PWM after conversion from analog to digital   form 0 -> 4095
+float voltage;  // calculate voltage from input pwm signal to the adc pin
+
+
+//                      ICU  varibles  < ignore it > 
 uint8_t Is_First_Captured = 0; // Flag to check if the first capture is done
 uint32_t rising_edge_1 = 0;    // Stores the timer value at the first rising edge
 uint32_t rising_edge_2 = 0;    // Stores the timer value at the second rising edge
@@ -40,6 +43,7 @@ float high_time = 0;           // Stores the time for the high period (pulse wid
 float period = 0;              // Stores the total period of the PWM signal
 float duty_cycle = 0;          // Stores the calculated duty cycle as a percentage
 ADC_ChannelConfTypeDef sConfigPrivate = {0};
+
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
@@ -122,11 +126,11 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM2_Init();
   MX_TIM3_Init();
-  lcd_init();
+  lcd_init(); // initialize lcd 
   /* USER CODE BEGIN 2 */
-    HAL_TIM_Base_Start(&htim2);
-    HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);   // Start Timer 2 to generate a PWM signal on Channel 3
-    HAL_TIM_IC_Start_IT(&htim3, TIM_CHANNEL_1); // Start Timer 3 in Input Capture mode on Channel 1 with interrupts enabled
+    HAL_TIM_Base_Start(&htim2); // starts the basic counter functionality of a timer
+    HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_3);   // put Timer 2 Channel 3 in pwm genration mode
+   //  HAL_TIM_IC_Start_IT(&htim3, TIM_CHANNEL_1); // put Timer 3 Channel 1  in Input Capture mode  <ignore>
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -149,7 +153,7 @@ int main(void)
 	        percentage = dutycycle * 100 / 8000; // Calculate percentage
 
 	        // Generate PWM signal
-	        __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_3, dutycycle);
+	        __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_3, dutycycle); 
 
 	        // ADC Channel 6 Configuration
 	        sConfigPrivate.Channel = ADC_CHANNEL_6;
@@ -176,6 +180,10 @@ int main(void)
 	        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, percentage >= 80 ? GPIO_PIN_SET : GPIO_PIN_RESET);
 	        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, percentage >= 100 ? GPIO_PIN_SET : GPIO_PIN_RESET);
 
+	       //  ( A ) ?  B  : C  == if(A){   B  }          lambda expression                                   
+	      //                        else{  C   }
+
+	  
 	        HAL_Delay(300); // Delay for visualizing data on LCD
 	        lcd_clear(); // Clear the screen
 
