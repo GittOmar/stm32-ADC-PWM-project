@@ -32,6 +32,7 @@
 
 #### Use GPIO functions from HAL to control the state of the LEDs.
 
+
 #### Update the LEDs based on the measured duty cycle or voltage values.
 
 ## 5.Display Duty Cycle and Voltage on LCD:
@@ -39,3 +40,5 @@
 #### Write functions to display the current duty cycle (as a percentage) and th e measured voltage value on the LCD.
 
 #### Ensure the display is updated periodically to show real time values.
+
+# Video to My design on Proteus  https://drive.google.com/file/d/1G75nkGe4hD9AYu2YeP_Gth_Iys9Kbb5s/view?usp=sharing
